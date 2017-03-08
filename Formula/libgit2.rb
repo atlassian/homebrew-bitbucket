@@ -1,4 +1,4 @@
-class Libgit2AT0241 < Formula
+class Libgit2 < Formula
   desc "C library of Git core methods that is re-entrant and linkable"
   homepage "https://libgit2.github.com/"
   url "https://github.com/libgit2/libgit2/archive/v0.24.1.tar.gz"
