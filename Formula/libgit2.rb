@@ -1,11 +1,15 @@
 class Libgit2 < Formula
   desc "C library of Git core methods that is re-entrant and linkable"
   homepage "https://libgit2.github.com/"
-  url "https://github.com/libgit2/libgit2/archive/v0.24.2.tar.gz"
-  sha256 "00f0a7403143fba69601accc80cacf49becc568b890ba232f300c1b2a37475e6"
+  url "https://github.com/libgit2/libgit2/archive/v0.25.1.tar.gz"
+  sha256 "7ae8e699ff7ff9a1fa702249140ee31ea6fd556bf7968e84e38165870667bcb1"
   head "https://github.com/libgit2/libgit2.git"
 
-  option :universal
+  bottle do
+    sha256 "d43aa3bea4589796cc3819f79e1c0022be9c763a17b8d2a6d88bd16f8c4d2da7" => :sierra
+    sha256 "a2c31c7175e7a36fcf6b08d57259490bc16ffd6190e9ca4ae8da3add44a172d9" => :el_capitan
+    sha256 "1c9a4e6b427e80df70d78c9dfdf857b269888a2c8091ddcdcc3ce96e6d0acd8d" => :yosemite
+  end
 
   depends_on "pkg-config" => :build
   depends_on "cmake" => :build
@@ -17,11 +21,6 @@ class Libgit2 < Formula
     args << "-DBUILD_EXAMPLES=YES"
     args << "-DBUILD_CLAR=NO" # Don't build tests.
     args << "-DUSE_SSH=NO" if build.without? "libssh2"
-
-    if build.universal?
-      ENV.universal_binary
-      args << "-DCMAKE_OSX_ARCHITECTURES=#{Hardware::CPU.universal_archs.as_cmake_arch_flags}"
-    end
 
     mkdir "build" do
       system "cmake", "..", *args
@@ -39,7 +38,6 @@ class Libgit2 < Formula
   test do
     (testpath/"test.c").write <<-EOS.undent
       #include <git2.h>
-
       int main(int argc, char *argv[]) {
         int options = git_libgit2_features();
         return 0;
