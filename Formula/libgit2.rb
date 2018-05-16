@@ -1,14 +1,19 @@
 class Libgit2 < Formula
   desc "C library of Git core methods that is re-entrant and linkable"
   homepage "https://libgit2.github.com/"
-  url "https://github.com/libgit2/libgit2/archive/v0.25.1.tar.gz"
-  sha256 "7ae8e699ff7ff9a1fa702249140ee31ea6fd556bf7968e84e38165870667bcb1"
+  url "https://github.com/libgit2/libgit2/archive/v0.26.3.tar.gz"
+  sha256 "0da4e211dfb63c22e5f43f2a4a5373e86a140afa88a25ca6ba3cc2cae58263d2"
   head "https://github.com/libgit2/libgit2.git"
 
   bottle do
-    sha256 "d43aa3bea4589796cc3819f79e1c0022be9c763a17b8d2a6d88bd16f8c4d2da7" => :sierra
-    sha256 "a2c31c7175e7a36fcf6b08d57259490bc16ffd6190e9ca4ae8da3add44a172d9" => :el_capitan
-    sha256 "1c9a4e6b427e80df70d78c9dfdf857b269888a2c8091ddcdcc3ce96e6d0acd8d" => :yosemite
+    sha256 "d65cbc0cd61400e9146a8b5902a340093aa2a488ed78e7d98562f3742c5ed8b3" => :high_sierra
+    sha256 "c15620661180e29df16c5061f8b3a692f14c33624584ce6ca69ae0050e99c840" => :sierra
+    sha256 "1ef3c29008e961a6b739a7658fe30aaa9d1898004c84075178bd13abdc97c410" => :el_capitan
+  end
+
+  devel do
+    url "https://github.com/libgit2/libgit2/archive/v0.27.0-rc2.tar.gz"
+    sha256 "7ba5b1155f3a35da63654f29465ab7e39e616a039b05bd639e38194e9c2784be"
   end
 
   depends_on "pkg-config" => :build
@@ -36,8 +41,9 @@ class Libgit2 < Formula
   end
 
   test do
-    (testpath/"test.c").write <<-EOS.undent
+    (testpath/"test.c").write <<~EOS
       #include <git2.h>
+
       int main(int argc, char *argv[]) {
         int options = git_libgit2_features();
         return 0;
